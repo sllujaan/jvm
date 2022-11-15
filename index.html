@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>jVectorMap demo</title>
+  <link rel="stylesheet" href="./jquery-jvectormap-2.0.5.css" type="text/css" media="screen" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+    integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="./jquery-jvectormap-2.0.5.min.js"></script>
+  <!-- <script src="https://jvectormap.com/js/jquery-jvectormap-world-mill.js"></script> -->
+  <script src="https://jvectormap.com/js/jquery-jvectormap-world-merc.js"></script>
+</head>
+
+<body>
+  <div id="world-map" style="width: 600px; height: 400px"></div>
+  <script>
+    $(function () {
+
+      const markers = [
+        { latLng: [42, -100], name: 'United States', region: "US", status: 'ourproducts' },
+        { latLng: [-24, 135], name: 'Australia', region: "AU", status: 'ourproducts' },
+        { latLng: [-9, -50], name: 'Brazil', region: "BR", status: 'otherproducts' }
+      ];
+
+      $('#world-map').vectorMap({
+        map: 'world_merc',
+        normalizeFunction: 'polynomial',
+        hoverOpacity: 0.7,
+        hoverColor: false,
+        markerStyle: {
+          initial: {
+            image: "https://www.ancientpurity.net/originsimg/markericon.png",
+          },
+        },
+        backgroundColor: '#b1e2f9',
+        series: {
+          regions: [{
+            values: {
+              'US': '#ffadb1',
+              'AU': '#afafff',
+              'BR': '#fff8ab'
+            },
+            attribute: 'fill'
+          }]
+        },
+        markers: markers,
+        series: {
+          markers: [{
+            attribute: 'image',
+            scale: {
+              'ourproducts': 'https://www.ancientpurity.net/originsimg/markericon2.png',
+              'otherproducts': 'https://www.ancientpurity.net/originsimg/markericon.png'
+            },
+            values: markers.reduce(function (p, c, i) { p[i] = c.status; return p }, {}),
+          }]
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
